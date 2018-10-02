@@ -8,7 +8,7 @@
 
 ## Create new user
 ### METHOD: POST
-### ENDPOINT: /api/user
+### ENDPOINT: /api/users/new
 ### BODY(json):
 {"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678"}
 ### RESPONSE SUCCESS(201)(json):
@@ -22,7 +22,7 @@ or
 
 ## Login user
 ### METHOD: GET
-### ENDPOINT: /api/user/login
+### ENDPOINT: /api/users/auth
 ### BODY(json):
 {"email":"fluffy@uia.no","password":"12345678"}
 ### RESPONSE SUCCESS(200)(json): 
