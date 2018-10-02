@@ -1,4 +1,4 @@
-# MM-200, Modul2 ,assignement 1, UiA, fall 2018
+# MM-200, Module 2 ,assignement 1, UiA, fall 2018
 
 ---
 
