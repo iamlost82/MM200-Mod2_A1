@@ -33,7 +33,7 @@ or
 
 ---
 
-#JOKES:
+# JOKE:
 
 ## Return personalized joke
 ### METHOD: POST
