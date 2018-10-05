@@ -5,6 +5,7 @@
 [Back to main page](https://github.com/iamlost82/MM200-Mod2_A1)
 
 ---
+# USERS:
 
 ## Create new user
 ### METHOD: POST
@@ -14,22 +15,33 @@
 ### RESPONSE SUCCESS(201)(json):
 {"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678","id":"1"}
 ### RESPONSE ERROR(400)(json):
-{"msg":"Error in inputdata. Read API documentation"}
+{"msg": "Storing user failed, check API documentation"}
 or
-{"msg":"Duplicate email found."}
+{"msg": "Duplicate email found"}
 
 ---
 
-## Login user
+## Authorize user
 ### METHOD: GET
 ### ENDPOINT: /api/users/auth
 ### BODY(json):
 {"email":"fluffy@uia.no","password":"12345678"}
 ### RESPONSE SUCCESS(200)(json): 
-{"userid":"1","auth":"HQSz15P379W8ieedUSFY"}
-### RESPONSE ERROR(401)(json):
-{"msg":"Unauthorized login attempt"}
+{"id":"1","name":"Mr.Fluffy","email":"fluffy@uia.no"}
 ### RESPONSE ERROR(400)(json):
-{"msg":"Error in inputdata. Read API documentation"}
+{"msg": "Authentication failed"}
 
+---
+
+#JOKES:
+
+## Return personalized joke
+### METHOD: POST
+### ENDPOINT: /api/joke
+### BODY(json):
+{"name":"Mr.Fluffy"}
+### RESPONSE SUCCESS(200)(json):
+```"<p>Mr. Fluffy: CAPS LOCK – Preventing Login Since 1980.</p>"```
+### RESPONSE ERROR(400)(json):
+```"<p>Sorry, things didn't work</p>"```
 ---
