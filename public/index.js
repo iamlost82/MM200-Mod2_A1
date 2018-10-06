@@ -2,10 +2,12 @@ let myContent = document.getElementById('content');
 //NAV
 let homeBtn = document.getElementById('homeBtn');
 let createNewUserBtn = document.getElementById('createNewUserBtn');
+let jokeHubBtn = document.getElementById('jokeHubBtn');
 //INIT
 let userNameInput = null;
 let userEmailInput = null;
 let userPasswordInput = null;
+let activePage = "home";
 
 function showLoadingPage(){
     myContent.innerHTML = `
@@ -15,6 +17,7 @@ function showLoadingPage(){
     `;
 }
 function pickLoginOrHomePage(){
+    sessionStorage.removeItem('activepage');
     if(sessionStorage.getItem('id')){
         showHomePage();
     } else{
@@ -73,19 +76,13 @@ async function showHomePage(){
     let logoutUserBtn = document.getElementById('logoutBtn');
     let jokeDiv = document.getElementById('jokeDiv');
     logoutUserBtn.addEventListener("click", logOut);
-    let apiBody = {name:sessionStorage.name};
-    let response = await fetch('/api/joke',
-    {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(apiBody)
-    });
+    let response = await fetch('/api/joke/random');
     response = await response.json();
+    response = response.body.replace(/INPNAME/g, userName);
     jokeDiv.innerHTML = response;
 }
 function showCreateUserPage(){
+    sessionStorage.setItem('activepage','createNeUser')
     myContent.innerHTML = `
     <fieldset>
         <legend>Create new user</legend>
@@ -142,9 +139,34 @@ function logOut(){
     sessionStorage.clear();
     showLoginPage();
 }
-
+async function showJokeHub(){
+    showLoadingPage();
+    sessionStorage.setItem('activepage','jokehub');
+    let response = await fetch('/api/joke');
+    response = await response.json();
+    myContent.innerHTML = "";
+    for(i in response){
+        myContent.innerHTML += `
+        <div class="jokeList">
+        <h2>ID: ${response[i].id}</h2>
+        ${response[i].body}
+        </div>
+        `;
+    }
+}
+function showActivePage(){
+    if(sessionStorage.activepage === "createNeUser"){
+        showCreateUserPage();
+    } else if(sessionStorage.activepage === "jokehub"){
+        showJokeHub();
+    } else{
+        pickLoginOrHomePage();
+    }
+}
 showLoadingPage();
-pickLoginOrHomePage();
+showActivePage();
+
 
 homeBtn.addEventListener("click",pickLoginOrHomePage);
 createNewUserBtn.addEventListener("click",showCreateUserPage);
+jokeHubBtn.addEventListener("click",showJokeHub);
