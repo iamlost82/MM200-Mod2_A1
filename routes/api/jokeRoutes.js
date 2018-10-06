@@ -31,16 +31,17 @@ const jokes = [
     }
 ];
 
-router.post('/', (req,res,next) => {
-    let status = 400;
-    let response = "<p>Sorry, things didn't work</p>"
-    if(req.body.name){
-        let userName = req.body.name;
-        let randomJoke = Math.floor(Math.random()*jokes.length);
-        let joke = jokes[randomJoke].body.replace(/INPNAME/g, userName);
-        status = 200;
-        response = joke;
-    }
+router.get('/', (req,res,next) => {
+    status = 200;
+    response = jokes;
+    res.status(status).json(response);
+});
+
+router.get('/random', (req,res,next) => {
+    let randomJoke = Math.floor(Math.random()*jokes.length);
+    let joke = jokes[randomJoke];
+    status = 200;
+    response = joke;
     res.status(status).json(response);
 });
 
