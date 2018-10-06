@@ -11,13 +11,13 @@
 ### METHOD: POST
 ### ENDPOINT: /api/users/new
 ### BODY(json):
-{"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678"}
+```{"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678"}```
 ### RESPONSE SUCCESS(201)(json):
-{"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678","id":"1"}
+```{"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678","id":"1"}```
 ### RESPONSE ERROR(400)(json):
-{"msg": "Storing user failed, check API documentation"}
+```{"msg": "Storing user failed, check API documentation"}```
 or
-{"msg": "Duplicate email found"}
+```{"msg": "Duplicate email found"}```
 
 ---
 
@@ -25,24 +25,27 @@ or
 ### METHOD: GET
 ### ENDPOINT: /api/users/auth
 ### BODY(json):
-{"email":"fluffy@uia.no","password":"12345678"}
+```{"email":"fluffy@uia.no","password":"12345678"}```
 ### RESPONSE SUCCESS(200)(json): 
-{"id":"1","name":"Mr.Fluffy","email":"fluffy@uia.no"}
+```{"id":"1","name":"Mr.Fluffy","email":"fluffy@uia.no"}```
 ### RESPONSE ERROR(400)(json):
-{"msg": "Authentication failed"}
+```{"msg": "Authentication failed"}```
 
 ---
 
 # JOKE:
 
-## Return personalized joke
-### METHOD: POST
+## Return personalized joke template
+### METHOD: GET
 ### ENDPOINT: /api/joke
-### BODY(json):
-{"name":"Mr.Fluffy"}
 ### RESPONSE SUCCESS(200)(json):
-```"<p>Mr. Fluffy: CAPS LOCK – Preventing Login Since 1980.</p>"```
-### RESPONSE ERROR(400)(json):
-```"<p>Sorry, things didn't work</p>"```
+```"<p>INPNAME: CAPS LOCK – Preventing Login Since 1980.</p>"```
 
 ---
+
+## Create new joke
+### METHOD: POST
+### BODY(json):
+```{"body":"<p>Testjoke</p>"}```
+### RESPONSE SUCCESS(200)(json):
+```{"msg": "New joke created"}```
