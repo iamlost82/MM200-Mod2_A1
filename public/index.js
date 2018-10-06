@@ -7,7 +7,6 @@ let jokeHubBtn = document.getElementById('jokeHubBtn');
 let userNameInput = null;
 let userEmailInput = null;
 let userPasswordInput = null;
-let activePage = "home";
 
 function showLoadingPage(){
     myContent.innerHTML = `
@@ -144,15 +143,87 @@ async function showJokeHub(){
     sessionStorage.setItem('activepage','jokehub');
     let response = await fetch('/api/joke');
     response = await response.json();
-    myContent.innerHTML = "";
-    for(i in response){
-        myContent.innerHTML += `
+    myContent.innerHTML = `
+    <div class="joke-container">
+        <h2>Input new joke here. Wherever you want the user name to show. Just type INPNAME</h2>
+        <div class="jokeList" id="jokeVal"></div>
         <div class="jokeList">
-        <h2>ID: ${response[i].id}</h2>
-        ${response[i].body}
+            <fieldset>
+            <legend>Create new joke</legend>
+            <input type="text" id="jokeLine1" placeholder="Input 1.st line of joke here (Must contain some text)">
+            <input type="text" id="jokeLine2" placeholder="Input 2.nd line of joke here (Can be empty)">
+            <input type="text" id="jokeLine3" placeholder="Input 3.rd line of joke here (Can be empty)">
+            <input type="text" id="jokeLine4" placeholder="Input 4.th line of joke here (Can be empty)">
+            <input type="text" id="jokeLine5" placeholder="Input 5.th line of joke here (Can be empty)">
+            <button class="button" id="saveNewJokeBtn" type="button">Save new joke</button>    
+            </fieldset>
+        </div>
+    </div>
+    `;
+    for(i in response){
+        jokeID = parseInt(i)+1;
+        myContent.innerHTML += `
+        <div class="joke-container">
+            <h2>ID: ${(jokeID)}</h2>
+            <div class="jokeList">
+            ${response[i].body}
+            </div>
         </div>
         `;
     }
+    let saveNewJokeBtn = document.getElementById('saveNewJokeBtn');
+    let jokeVal = document.getElementById('jokeVal');
+    let jokeLine1 = document.getElementById('jokeLine1');
+    let jokeLine2 = document.getElementById('jokeLine2');
+    let jokeLine3 = document.getElementById('jokeLine3');
+    let jokeLine4 = document.getElementById('jokeLine4');
+    let jokeLine5 = document.getElementById('jokeLine5');
+    saveNewJokeBtn.addEventListener("click", async function(){
+        jokeVal.innerHTML = '';
+        jokeStoreString = ''
+        linesToPass = 0;
+        if(jokeLine1.value !== ''){
+            linesToPass++;
+            jokeStoreString += '<p>' + jokeLine1.value + '</p>';
+        }
+        if(jokeLine2.value !== ''){
+            linesToPass++;
+            jokeStoreString += '<p>' + jokeLine2.value + '</p>';
+        }
+        if(jokeLine3.value !== ''){
+            linesToPass++;
+            jokeStoreString += '<p>' + jokeLine3.value + '</p>';
+        }
+        if(jokeLine4.value !== ''){
+            linesToPass++;
+            jokeStoreString += '<p>' + jokeLine4.value + '</p>';
+        }
+        if(jokeLine5.value !== ''){
+            linesToPass++;
+            jokeStoreString += '<p>' + jokeLine5.value + '</p>';
+        }
+        if(linesToPass === 0){
+            jokeVal.innerHTML += "<p class='errormsg'>Error: All fields can't be empty!</p>";
+        } else{
+            let saveStatus = await fetch('api/joke/new',
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify({body:jokeStoreString})
+            });
+            saveStatus = await saveStatus.json();
+            jokeVal.innerHTML += `<p class='successmsg'>SUCCESS: ${saveStatus.msg}!</p>
+                                  <p class='successmsg'>Refresh to se new joke in list</p>`;
+            jokeLine1.value = '';
+            jokeLine2.value = '';
+            jokeLine3.value = '';
+            jokeLine4.value = '';
+            jokeLine5.value = '';
+        }
+
+    });
 }
 function showActivePage(){
     if(sessionStorage.activepage === "createNeUser"){
