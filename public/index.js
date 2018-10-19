@@ -43,7 +43,7 @@ function showLoginPage(){
         let userEmail = userEmailInput.value;
         let userPassword = userPasswordInput.value;
         let apiBody = {"email":userEmail,"password":userPassword};
-        let response = await fetch('/api/users/auth',
+        let response = await fetch('/api/user/auth',
         {
             method: 'POST',
             headers: {
@@ -75,7 +75,7 @@ async function showHomePage(){
     let logoutUserBtn = document.getElementById('logoutBtn');
     let jokeDiv = document.getElementById('jokeDiv');
     logoutUserBtn.addEventListener("click", logOut);
-    let response = await fetch('/api/joke/random');
+    let response = await fetch('/api/joke');
     response = await response.json();
     response = response.body.replace(/INPNAME/g, userName);
     jokeDiv.innerHTML = response;
@@ -105,7 +105,7 @@ function showCreateUserPage(){
         let userEmail = userEmailInput.value;
         let userPassword = userPasswordInput.value;
         let apiBody = {"name":userName,"email":userEmail,"password":userPassword};
-        let response = await fetch('/api/users/new',
+        let response = await fetch('/api/user',
         {
             method: 'POST',
             headers: {
@@ -141,7 +141,7 @@ function logOut(){
 async function showJokeHub(){
     showLoadingPage();
     sessionStorage.setItem('activepage','jokehub');
-    let response = await fetch('/api/joke');
+    let response = await fetch('/api/jokes');
     response = await response.json();
     myContent.innerHTML = `
     <div class="joke-container">
@@ -205,7 +205,7 @@ async function showJokeHub(){
         if(linesToPass === 0){
             jokeVal.innerHTML += "<p class='errormsg'>Error: All fields can't be empty!</p>";
         } else{
-            let saveStatus = await fetch('api/joke/new',
+            let saveStatus = await fetch('api/joke',
             {
                 method: 'POST',
                 headers: {

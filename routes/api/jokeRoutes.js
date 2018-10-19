@@ -24,13 +24,13 @@ const jokes = [
     }    
 ];
 
-router.get('/', (req,res,next) => {
+router.get('/api/jokes', (req,res,next) => {
     status = 200;
     response = jokes;
     res.status(status).json(response);
 });
 
-router.get('/random', (req,res,next) => {
+router.get('/api/joke', (req,res,next) => {
     if(jokes.length > 0){
         let randomJoke = Math.floor(Math.random()*jokes.length);
         let joke = jokes[randomJoke];
@@ -43,7 +43,7 @@ router.get('/random', (req,res,next) => {
     res.status(status).json(response);
 });
 
-router.post('/new', (req,res,next) => {
+router.post('api/joke', (req,res,next) => {
     let newJoke = req.body
     jokes.push(newJoke);
     res.status(201).json({msg:"New joke created"});

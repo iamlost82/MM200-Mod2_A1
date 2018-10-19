@@ -3,7 +3,7 @@ const router = express.Router();
 
 const users = [{id:"1",name:"Mr.Fluffy",email:"fluffy@uia.no",password:"12345678"}];
 
-router.post('/new', (req,res,next) => {
+router.post('/api/user', (req,res,next) => {
     let status = 400;
     let response = {msg:"Error on creating new user"};
     userValidation = validateNewUserInput(req.body);
@@ -20,7 +20,7 @@ router.post('/new', (req,res,next) => {
     res.status(status).json(response).end();
 });
 
-router.post('/auth', (req,res,next) => {
+router.post('/api/user/auth', (req,res,next) => {
     let status = 401;
     let response = {msg:"Authentication failed"};
     if(validateUserAuthInput(req.body)===true){
