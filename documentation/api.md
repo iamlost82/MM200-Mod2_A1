@@ -9,7 +9,7 @@
 
 ## Create new user
 ### METHOD: POST
-### ENDPOINT: /api/users/new
+### ENDPOINT: /api/user
 ### BODY(json):
 ```{"name":"Mr.Fluffy","email":"fluffy@uia.no","password":"12345678"}```
 ### RESPONSE SUCCESS(201)(json):
@@ -23,7 +23,7 @@ or
 
 ## Authorize user
 ### METHOD: GET
-### ENDPOINT: /api/users/auth
+### ENDPOINT: /api/user/auth
 ### BODY(json):
 ```{"email":"fluffy@uia.no","password":"12345678"}```
 ### RESPONSE SUCCESS(200)(json): 
@@ -35,7 +35,7 @@ or
 
 # JOKE:
 
-## Return personalized joke template
+## Return random joke template
 ### METHOD: GET
 ### ENDPOINT: /api/joke
 ### RESPONSE SUCCESS(200)(json):
@@ -45,7 +45,22 @@ or
 
 ## Create new joke
 ### METHOD: POST
+### ENDPOINT: /api/joke
 ### BODY(json):
 ```{"body":"<p>Testjoke</p>"}```
 ### RESPONSE SUCCESS(200)(json):
 ```{"msg": "New joke created"}```
+
+---
+## Return list of jokes
+### METHOD: GET
+### ENDPOINT: /api/jokes
+### RESPONSE SUCCESS(200)(json):
+```[
+    {
+        body:"<p>Mother: Anton, do you think I'm a bad mother?</p><p>You: My name is INPNAME!!</p>"
+    },
+    {
+        body:"<p>Barista: How do you take your coffee?</p><p>INPNAME: Very, very seriously.</p>"
+    }
+    ]```
